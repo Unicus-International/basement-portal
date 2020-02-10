@@ -1,7 +1,8 @@
 body {
-    background-image: url("Concrete.jpg");
+    background-image: url("Concrete.jpg") ;
     background-color: gray;
     margin: 0;
+    overflow: visible;
 }
 
 
@@ -12,16 +13,18 @@ body {
   float: left;
   width: 20%;
   padding: 0 2em 6em 2em;
+  overflow: visible;
 }
 
 /* Remove extra left and right margins, due to padding */
-.row {margin: 6em 1em;}
+.row {margin: 6em 1em; overflow: visible;}
 
 /* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
   clear: both;
+  overflow: visible;
 }
 
 /* Responsive columns */
@@ -39,6 +42,7 @@ body {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
+  overflow: hidden;
 }
 
 
@@ -51,15 +55,19 @@ body {
 .nav-bar {
     width: 100% !important; /* Full-width */
     background-color: white; /* White background */
-    padding-bottom: 0em;
-    overflow: auto; /* Overflow due to float */
-    vertical-align: text-bottom;
+    padding-bottom: 1%;
+    z-index: -1;
+    height: 3em;
+    overflow: visible; /* Overflow due to float */
+    /*vertical-align: text-bottom;*/
   }
   /*Logo i høyre hjørne*/
   .logo-img {
     position: absolute;
     width: 4em;
+    width: 5vw; /*Dette gjør at den skalerer med skjermstørrelse*/
     left: 0.4em;
+    left: 0.4vw;
     top: 0em;
     margin: 0em, 1em, 1em, 1em;
     display: inline-block;
@@ -70,6 +78,7 @@ body {
   .nav-bar h1 {
         color: black;
         font-size: 3em;
+        font-size: 4vw; /*Dette gjør at den skalerer med skjermstørrelse*/
         text-align: center;
         margin-top: 0em;
         /*display:inline-block;*/
@@ -86,8 +95,10 @@ body {
         background-color: white;
         margin-top: 0em;
         padding-right: 0.4em;
+        padding-bottom: 0;
         float: right;
-        font-size: 1.5em;
+        font-size: 1.3em;
+        font-size: 1.6vw; /*Dette gjør at den skalerer med skjermstørrelse*/
         text-decoration: none;
         font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
         text-align: right;
@@ -95,6 +106,65 @@ body {
   .login:focus {    /*Dette gjør så knappen ikke får firkant rundt seg når trykket på*/
     outline: none;
   }
+
+  .usr-link{
+    color: black;
+    border: none;
+    background-color: white;
+    text-decoration: none;
+    padding-top: 0.2em;
+    font-size: 1.5em;
+    float: left;
+    padding-bottom: 0;
+    text-align: left;
+    padding-right: 0.6em;
+    cursor: pointer;
+    font-weight: bold;
+    position: relative;
+    width: auto;
+  }
+  /*Dette gjør så knappen ikke får firkant rundt seg når trykket på*/
+  .usr-link:focus {    
+    outline: none;
+  }
+  .usr-options{
+    position: relative;
+    display: inline-block;
+  }
+  
+  .usr-dropdown-menu{
+    display: none;
+    min-width: 3em;
+    right: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 999;
+    top: 100%;
+    position: absolute;
+    background: white;
+    color: black;
+  }
+  .usr-dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left; 
+  }
+  .usr-dropdown-menu a:hover{
+    background-color: beige;
+  }
+  .urs-options{
+    float:right;
+    text-align: right;
+    position: relative;
+    display: block;
+  }
+
+  .show {display: block;}
+
+
+
+
 
 
 
@@ -196,7 +266,7 @@ span.psw {
 }
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 600px) {
   span.psw {
      display: block;
      float: none;
@@ -226,28 +296,45 @@ span.psw {
   padding: 16px;
   text-align: left;
 }
-
+.modal3 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
 
 
 
 
   /*dette er for menyen*/
   .container2 {
-    position: relative; 
+    position: absolute; 
     float: left;
     top: 0.5em;
     /*display: inline-block;*/
     text-align: left;
     margin-top: 0.40em;
+    margin-top: 0.4vw;
     margin-left: 5em;
+    margin-left: 6vw;
     cursor: pointer;
   }
   
   .bar1, .bar2, .bar3 {
-    width: 35px;
-    height: 5px;
+    width: 2.2em; 
+    width: 2.5vw;
+    height: 0.3em;
+    height: 0.35vw;
     background-color: #333;
-    margin: 6px 0;
+    margin: 0.4em 0;
+    margin: 0.47vw 0;
     transition: 0.4s;
   }
   
@@ -267,3 +354,45 @@ span.psw {
     -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
     transform: rotate(45deg) translate(-8px, -8px) ;
   }
+
+  .hamburg-dropdown{
+    display: none;
+    margin-right: 8%;
+    width: 20em;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 999;
+    top: 100%;
+    left: auto;
+    right: -500%;
+    position: absolute;
+    background: white;
+    color: black;
+  }
+  .hamburg-dropdown h2 {
+    color: black;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-top: 0;
+    margin-bottom: 0.3em;
+    font-size: 3em;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .hamburg-dropdown a {
+    color: black;
+    padding: 0.5em 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .hamburg-dropdown a:hover{
+    background-color: beige;
+  }
+
+  .footer-bar{
+    background-color: white;
+    text-align: center;
+  }
+
+

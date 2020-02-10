@@ -11,26 +11,51 @@
         <!--Navigasjonsbar på toppen-->
         <nav class="nav-bar">
             <img class="logo-img" src="BasementUB-logo.PNG" alt="Logo"> <!--Logo skal lenke til forsiden?-->
-            <div class="container2" onclick="openMenu(this)"> <!--Denne må kunne forbedres-->
+            <div class="container2" id="filterMeny" onclick="openMenu(this)"> <!--Denne må kunne forbedres-->
                 <div class="bar1"></div>  <!--Disse er de svarte barene i menyen, men dette burde kunne forbedres-->
                 <div class="bar2"></div>
                 <div class="bar3"></div>
+                <div class="hamburg-dropdown" id="hamburg-dropdown" style="display:none" onClick='javascript:void(0);'>
+                  <h2>Kategorier</h2>
+                  <a href="#">Mest populære</a>
+                  <a href="#">Nyeste</a>
+                  <a href="#">Førstkommende</a>
+                  <h2>Sjanger</h2>
+                  <a href="#" onClick="filtrerKort('Pop')">Pop</a>
+                  <a href="#" onClick="filtrerKort('Rock')">Rap</a>
+                  <a href="#" onClick="filtrerKort('Indie')">Indie</a>
+                  <a href="#" onClick="filtrerKort('Rock')">Rock</a>
+                  <a href="#" onClick="filtrerKort('Metal')">Metal</a>
+                  <a href="#" onClick="filtrerKort('Klassisk')">Klassisk</a>
+                  <a href="#" onClick="filtrerKort('Jazz')">Jazz</a>
+                  <a href="#" onClick="filtrerKort('Elektronisk')">Elektronisk</a>
+                  <a href="#" onClick="filtrerKort('Annet')">Annet</a>
+                </div>
             </div><!-- Login-knappen -->
-            <button class="login" onClick="document.getElementById('id01').style.display='block'" style="width:auto;">Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
-            <h1>Basement</h1><!--Font for denne endres i CSS-->
+            <button class="login" id="login-btn" onClick="document.getElementById('id01').style.display='block'" style="width:auto;">Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
+            <!--TODO legg inn valg under menyen her-->
+            <div class="urs-options" id="usr-opt" style="display:none">
+              <button class="usr-link" id="usr-link" onClick="openUsrmenu()" ></button>
+              <div id="usr-dropdown" class="usr-dropdown-menu" >
+                <a href="#">Profil</a>
+                <a href="#" onClick="openEventReg()">Lag kort</a>
+                <a href="#" onClick="logOut()">Logg ut</a>
+              </div>
+            </div>
+            <h1 class="page-title">Basement</h1><!--Font for denne endres i CSS-->
           </nav>
           <!--Dette er innloggingsformen-->
           <div id="id01" class="modal">
-            <form id="form1" class="modal-content animate" action="javascript:void(0);" onsubmit="return validateForm()" method="post">
+            <form id="form1" class="modal-content animate" action="javascript:void(0);" onsubmit="validerLogin(document.getElementById('uname-login'), document.getElementById('psw-login'))" method="post">
                 <div class="imgcontainer"><!--Dette er X-en oppe i hjørnet-->
                     <span onclick="document.getElementById('id01').style.display='none'; clearFields('form1');" class="close" title="Close Modal">&times;</span>
                 </div>
                 <div class="container"><!--Brukernavn og passord til innlogging:-->
                     <label for="uname"><b>Brukernavn</b></label>
-                    <input type="text" placeholder="Skriv Brukernavn" onfocus="this.value=''" name="uname" required>
+                    <input type="text" placeholder="Skriv Brukernavn" name="uname" id="uname-login" required>
               
                     <label for="psw"><b>Passord</b></label>
-                    <input type="password" placeholder="Skriv Passord" name="psw" required>
+                    <input type="password" placeholder="Skriv Passord" name="psw" id="pws-login" required>
                       
                     <button type="submit" onClick="">Logg inn</button>
                     <label>
@@ -73,11 +98,39 @@
                   </div>
             </form>
           </div>
+          <div id="id03" class="modal3">
+            <form id="form3" class="modal-content animate" action="javascript:void(0);" onsubmit="lagKort(this)">
+              <div class="imgcontainer"><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
+                <span onclick="document.getElementById('id03').style.display='none'; clearFields('form3')" class="close" title="Close Modal">&times;</span>
+            </div>
+              <div class="container"><!--Felt for brukernavn:-->
+                <label for="bildelink">Lenke til bilde:</label>
+                <input type="text" placeholder="Bildelenke" id="bildelink">
+                <label for="datokonsert">Konsertdato</label>
+                <input type="date" placeholder="3/3/3" id="konsertdato" required>
+                <label for="spillested">Konsertlokale</label>
+                <input type="text" placeholder="Sted" id="konsertsted" required>
+                <label for="musikktype">Sjanger</label>
+                <select name="sjanger" id="sjanger" required>
+                  <option value="Pop">Pop</option>
+                  <option value="Rap">Rap</option>
+                  <option value="Indie">Indie</option>
+                  <option value="Rock">Rock</option>
+                  <option value="Metal">Metal</option>
+                  <option value="Klassisk">Klassisk</option>
+                  <option value="Jazz">Jazz</option>
+                  <option value="Elektro">Elektronisk</option>
+                  <option value="Annet">Annet</option>
+                </select>
+                <button type="submit">Registrer konsert</button>
+                </div>
+            </form>
+          </div>
           <!--Her skal feeden for poster være-->
           <!--Disse er eksempler på bokser med arrangementer og hvordan det ser ut:-->
-          <div class="row">
+          <div class="row" id="row">
             <div class="column">
-              <div class="card">
+              <div class="card" id="card1">
                 <h3>Card 1</h3>
                 <p>Some text</p>
                 <p>Some text</p>
@@ -122,17 +175,57 @@
         
         
     </body>
+    <footer>
+      <div class="footer-bar">&copy; BasementUB 2020</div>
+    </footer>
     <!--Legg til footer med opphavsrett og shit? Kontakt oss og hjelpeside?-->
     <!--Skal disse scriptene flyttes til egen fil?-->
     <script>
         //Hent Modalen
         var modal = document.getElementById('id01');
         var modal2 = document.getElementById('id02');
+        var modal3 = document.getElementById('id03');
+
+
+        if(sessionStorage.getItem('userName') == null){
+          document.getElementById('login-btn').style.display = "block";
+          document.getElementById('usr-opt').style.display = "none";
+        }else{
+          document.getElementById('usr-link').innerHTML = sessionStorage.getItem('userName');
+          document.getElementById('login-btn').style.display = "none";
+          document.getElementById('usr-opt').style.display = "block";
+          
+        }
+        function logOut(){
+          sessionStorage.clear();
+          window.location.reload();
+        }
+
+        
+
+        function openUsrmenu(){
+          document.getElementById("usr-dropdown").classList.toggle("show");
+        }
+
         //Når noen trykker utenfor vinduet, lukk det
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
                 clearFields("form1");
+            }
+            if (event.target == modal3) {
+                modal3.style.display = "none";
+                clearFields("form3");
+            }
+            if (!event.target.matches('.usr-link')) {
+              var dropdowns = document.getElementsByClassName("usr-dropdown-menu");
+              var i;
+              for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                  openDropdown.classList.remove('show');
+                }
+              }
             }
         }
         //Tømmer alle feltene når registrerings- eller innloggingsvinduet lukkes
@@ -141,8 +234,11 @@
         }
         //Åpner registreringsvinduet og lukker innloggingsvinduet
         function openReg(){
-          document.getElementById('id02').style.display='block'
+          document.getElementById('id02').style.display='block';
           modal.style.display = "none";
+        }
+        function openEventReg(){
+          document.getElementById('id03').style.display='block';
         }
         //Sjekker at passordene matcher
         function checkPassword(input){
@@ -161,12 +257,58 @@
           }
         }
         
+        function validerLogin(uname, pword){
+          if(uname.value == "Arnold" ){
+            sessionStorage.setItem('userName', uname.value);
+            window.location.reload();
+          }else{
+            uname.setCustomValidity('Brukernavn og passord matcher ikke');
+          }
+        }
+
+        function filtrerKort(input){ //Denne må endres på!!!
+          var kort = document.getElementById('row').getElementsByClassName('column');
+          for(var i=0;i<kort.length; i++){
+            if(kort[i].getAttribute('data-genre').value != input){
+              kort[i].style.display = 'none';
+            }
+          }
+          /*if(document.getElementById('card5').style.display == 'none'){
+            document.getElementById('card5').style.display = 'block';
+          }else{
+            document.getElementById('card5').style.display = 'none';
+          }*/
+        }
+
+        function lagKort(myform){
+          var column = document.createElement('div');
+          var card = document.createElement('div');
+          column.setAttribute("class", "column");
+          column.setAttribute("id", "card5");
+          column.setAttribute("data-genre", document.getElementById('sjanger'));
+          card.setAttribute("class", "card");
+          card.innerHTML = '<h3>' + sessionStorage.getItem('userName') + '</h3><p>' + document.getElementById('konsertdato').value + ' - ' + document.getElementById('konsertsted').value + '</p><p>' + document.getElementById('sjanger').value + '</p>';
+          document.getElementById('row').appendChild(column);
+          column.appendChild(card);
+          modal3.style.display = "none";
+          clearFields("form3");
+        }
         
         
         //Åpner menyen i hjørnet
         function openMenu(x) {
             x.classList.toggle("change");
-}
+            if(document.getElementById('hamburg-dropdown').style.display == 'none'){
+              document.getElementById('hamburg-dropdown').style.display='block';
+            }else{
+              document.getElementById('hamburg-dropdown').style.display='none';
+            }
+        }
+        var filterMeny = document.getElementById('hamburg-dropdown');
+        filterMeny.addEventListener("click", function (e) {
+          e.stopPropagation()
+        });
+
     </script>
 
 </html>

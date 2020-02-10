@@ -1,9 +1,172 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Basement – Portal</title>
-  </head>
-  <body>
-    <h1>Basement – Portal</h1>
-  </body>
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--bytt til egen css fil-->
+    <head>
+        
+    </head>
+    <body>
+        <!--Navigasjonsbar på toppen-->
+        <nav class="nav-bar">
+            <img class="logo-img" src="BasementUB-logo.PNG" alt="Logo"> <!--Logo skal lenke til forsiden?-->
+            <div class="container2" onclick="openMenu(this)"> <!--Denne må kunne forbedres-->
+                <div class="bar1"></div>  <!--Disse er de svarte barene i menyen, men dette burde kunne forbedres-->
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div><!-- Login-knappen -->
+            <button class="login" onClick="document.getElementById('id01').style.display='block'" style="width:auto;">Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
+            <h1>Basement</h1><!--Font for denne endres i CSS-->
+          </nav>
+          <!--Dette er innloggingsformen-->
+          <div id="id01" class="modal">
+            <form id="form1" class="modal-content animate" action="javascript:void(0);" onsubmit="return validateForm()" method="post">
+                <div class="imgcontainer"><!--Dette er X-en oppe i hjørnet-->
+                    <span onclick="document.getElementById('id01').style.display='none'; clearFields('form1');" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="container"><!--Brukernavn og passord til innlogging:-->
+                    <label for="uname"><b>Brukernavn</b></label>
+                    <input type="text" placeholder="Skriv Brukernavn" onfocus="this.value=''" name="uname" required>
+              
+                    <label for="psw"><b>Passord</b></label>
+                    <input type="password" placeholder="Skriv Passord" name="psw" required>
+                      
+                    <button type="submit" onClick="">Logg inn</button>
+                    <label>
+                      <input type="checkbox" checked="checked" name="remember"> Husk meg
+                    </label>
+                  </div>
+                  <div class="container" style="background-color:#f1f1f1">
+                    <button class="newusr" onClick="openReg()" style="width:auto;">Opprett bruker</button><!--Knapp for å registrere ny bruker-->
+                    <span class="psw">Glemt <a href="#">passord?</a></span>
+                  </div>
+            </form>
+          </div>
+          <!--Formen for å registrere ny bruker:-->
+          <!--TODO! Legg inn bedre css-koden for denne!-->
+          <div id="id02" class="modal2"> <!--javascript:void(0);-->
+            <form id="form2" class="modal-content animate" action="action_page.php" onsubmit="regNyBruker(this)" method="post">
+                <div class="imgcontainer"><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
+                    <span onclick="document.getElementById('id02').style.display='none'; clearFields('form2')" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="container"><!--Felt for brukernavn:-->
+                    <label for="reguname"><b>Brukernavn</b></label>
+                    <input type="text" placeholder="Skriv Brukernavn" name="uname" required>
+                    <!--Feltene for passord, med mønster som må følges:-->
+                    <label for="regpsw1"><b>Passord</b></label>
+                    <input type="password" placeholder="Skriv Passord" name="psw" id="psw1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Passordet må inneholde stor bokstav, liten bokstav, tall og være 8 karakterer langt" required>
+                    <label for="regpsw2"><b>Bekreft passord</b></label>
+                    <input type="password" placeholder="Skriv Passord" name="psw" id="psw2" oninput="checkPassword(this)" required>
+                    <!--Feltene for e-postadresse:-->
+                    <label for="mail1"><b>E-post</b></label>
+                    <input type="email" placeholder="Angi E-postadresse" name="email" id="email1" required>
+                    <label for="mail2"><b>Bekreft e-post</b></label>
+                    <input type="email" placeholder="Angi E-postadresse" name="email" id="email2" oninput="checkEmail(this)" required>
+
+                    <label><!--Boks for om brukeren er en artist. Denne vil være automatisk i prototypen-->
+                      <input type="checkbox" checked="checked" id="checkArtist"> Jeg er en artist
+                    </label>
+                  
+                    <button type="submit">Registrer bruker</button>
+                    
+                  </div>
+            </form>
+          </div>
+          <!--Her skal feeden for poster være-->
+          <!--Disse er eksempler på bokser med arrangementer og hvordan det ser ut:-->
+          <div class="row">
+            <div class="column">
+              <div class="card">
+                <h3>Card 1</h3>
+                <p>Some text</p>
+                <p>Some text</p>
+              </div>
+            </div>
+          
+            <div class="column">
+              <div class="card">
+                <h3>Card 2</h3>
+                <p>Some text</p>
+                <p>Some text</p>
+              </div>
+            </div>
+            
+            <div class="column">
+              <div class="card">
+                <h3>Card 3</h3>
+                <p>Some text</p>
+                <p>Some text</p>
+              </div>
+            </div>
+            
+            <div class="column">
+              <div class="card">
+                <h3>Card 4</h3>
+                <p>Some text</p>
+                <p>Some text</p>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="card">
+                <h3>Card 5</h3>
+                <p>Some text</p>
+                <p>Some text</p>
+              </div>
+            </div>
+          </div>
+
+
+
+        
+        
+    </body>
+    <!--Legg til footer med opphavsrett og shit? Kontakt oss og hjelpeside?-->
+    <!--Skal disse scriptene flyttes til egen fil?-->
+    <script>
+        //Hent Modalen
+        var modal = document.getElementById('id01');
+        var modal2 = document.getElementById('id02');
+        //Når noen trykker utenfor vinduet, lukk det
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                clearFields("form1");
+            }
+        }
+        //Tømmer alle feltene når registrerings- eller innloggingsvinduet lukkes
+        function clearFields(myform){
+          document.getElementById(myform).reset();
+        }
+        //Åpner registreringsvinduet og lukker innloggingsvinduet
+        function openReg(){
+          document.getElementById('id02').style.display='block'
+          modal.style.display = "none";
+        }
+        //Sjekker at passordene matcher
+        function checkPassword(input){
+          if(input.value != document.getElementById('psw1').value){
+            input.setCustomValidity('Passordet matcher ikke.');
+          }else{
+            input.setCustomValidity('');
+          }
+        }
+        //Sjekker at e-postene matcher 
+        function checkEmail(input){
+          if(input.value != document.getElementById('email1').value){
+            input.setCustomValidity('E-postadressen matcher ikke.');
+          }else{
+            input.setCustomValidity('');
+          }
+        }
+        
+        
+        
+        //Åpner menyen i hjørnet
+        function openMenu(x) {
+            x.classList.toggle("change");
+}
+    </script>
+
 </html>

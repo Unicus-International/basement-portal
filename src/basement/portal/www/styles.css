@@ -1,6 +1,8 @@
 body {
     background-image: url("Concrete.jpg") ;
     background-color: gray;
+    background-repeat: no-repeat;
+    background-size: cover;
     margin: 0;
     overflow: visible;
 }
@@ -8,16 +10,16 @@ body {
 
 
 
-
+/*Boksene som holder kortene på forsiden med konserter*/
 .column {
   float: left;
   width: 20%;
-  padding: 0 2em 6em 2em;
+  padding: 1em 2em 3em 2em;
   overflow: visible;
 }
 
 /* Remove extra left and right margins, due to padding */
-.row {margin: 6em 1em; overflow: visible;}
+.row {margin: 3em 1em; overflow: visible;}
 
 /* Clear floats after the columns */
 .row:after {
@@ -39,27 +41,46 @@ body {
 /* Style the counter cards */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 16px;
+  padding: 0;
+  height: 11.5vw;
+  height: 10em;
   text-align: center;
   background-color: #f1f1f1;
+  background: linear-gradient(black 50%, white 50%);
   overflow: hidden;
+}
+/*For bildet i hvert kort*/
+.card img{
+  height:50%;
+  width:100%;
+  object-fit: fill;
+}
+/*Tittelen/artisten på hvert kort*/
+.card h3{
+  margin-top: 0;
+  font-size: 1.4vw;
+  font-size: 1.2em;
+  margin-bottom: 0;
+  font-family: "Times New Roman", Times, serif;
+}
+/*Teksten på kortet, som sjanger og tid/sted*/
+.card p{
+  font-size: small;
+  margin-top: 0;
 }
 
 
 
 
-
-
-
-
+/*Navigasjonsbaren på toppen av siden*/
 .nav-bar {
     width: 100% !important; /* Full-width */
     background-color: white; /* White background */
     padding-bottom: 1%;
     z-index: -1;
-    height: 3em;
+    height: 3.5vw;
+    /*height: 3em;*/
     overflow: visible; /* Overflow due to float */
-    /*vertical-align: text-bottom;*/
   }
   /*Logo i høyre hjørne*/
   .logo-img {
@@ -71,7 +92,7 @@ body {
     top: 0em;
     margin: 0em, 1em, 1em, 1em;
     display: inline-block;
-
+    cursor: pointer;
   }
 
 /*Overskriften*/
@@ -81,7 +102,6 @@ body {
         font-size: 4vw; /*Dette gjør at den skalerer med skjermstørrelse*/
         text-align: center;
         margin-top: 0em;
-        /*display:inline-block;*/
         position: absolute;
         padding-bottom: 1em;
         left: 45%;
@@ -114,6 +134,7 @@ body {
     text-decoration: none;
     padding-top: 0.2em;
     font-size: 1.5em;
+    font-size: 1.8vw;
     float: left;
     padding-bottom: 0;
     text-align: left;
@@ -233,7 +254,7 @@ span.psw {
   background-color: #fefefe;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button (x) */
@@ -310,15 +331,51 @@ span.psw {
   padding-top: 60px;
 }
 
+.modal4 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 0;
+}
 
-
+.container-konsert {
+  padding: 0;
+  padding-top: 0;
+  text-align: center;
+}
+.imgcontainer-info{
+  text-align: center;
+  margin: 0;
+  position: relative;
+  display: block;
+  background-color: black;
+  width: 100%;
+  height: 16em;
+  object-fit: scale-down;
+}
+.imgcontainer-info img{
+  height: 100%;
+  width: 100%;
+}
+.container-konsert p{
+  text-align: center;
+  font-size: small;
+  margin-top: 0;
+  padding-top: 0;
+}
 
   /*dette er for menyen*/
   .container2 {
     position: absolute; 
     float: left;
     top: 0.5em;
-    /*display: inline-block;*/
     text-align: left;
     margin-top: 0.40em;
     margin-top: 0.4vw;
@@ -388,11 +445,6 @@ span.psw {
   }
   .hamburg-dropdown a:hover{
     background-color: beige;
-  }
-
-  .footer-bar{
-    background-color: white;
-    text-align: center;
   }
 
 

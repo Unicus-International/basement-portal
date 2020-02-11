@@ -9,14 +9,38 @@
   <body>
     <!--Navigasjonsbar på toppen-->
     <nav class="nav-bar">
-      <img class="logo-img" src="BasementUB-logo.PNG" alt="Logo" /> <!--Logo skal lenke til forsiden?-->
-      <div class="container2" onclick="openMenu(this)"> <!--Denne må kunne forbedres-->
+      <img class="logo-img" src="BasementUB-logo.PNG" alt="Logo" onClick="visAlleKort()" /> <!--Logo skal lenke til forsiden?-->
+      <div class="container2" id="filterMeny" onclick="openMenu(this)"> <!--Denne må kunne forbedres-->
         <div class="bar1"></div>  <!--Disse er de svarte barene i menyen, men dette burde kunne forbedres-->
         <div class="bar2"></div>
         <div class="bar3"></div>
+        <div class="hamburg-dropdown" id="hamburg-dropdown" style="display:none" onClick='javascript:void(0);'>
+                  <h2>Kategorier</h2>
+                  <a href="#">Mest populære</a>
+                  <a href="#" onClick="visAlleKort()">Nyeste</a>
+                  <a href="#" onClick="nyesteKort()">Førstkommende</a>
+                  <h2>Sjanger</h2>
+                  <a href="" onClick="filtrerKort('Pop')">Pop</a>
+                  <a href="" onClick="filtrerKort('Rap')">Rap</a>
+                  <a href="" onClick="filtrerKort('Indie')">Indie</a>
+                  <a href="" onClick="filtrerKort('Rock')">Rock</a>
+                  <a href="" onClick="filtrerKort('Metal')">Metal</a>
+                  <a href="" onClick="filtrerKort('Klassisk')">Klassisk</a>
+                  <a href="" onClick="filtrerKort('Jazz')">Jazz</a>
+                  <a href="" onClick="filtrerKort('Elektro')">Elektronisk</a>
+                  <a href="" onClick="filtrerKort('Annet')">Annet</a>
+       </div>
       </div><!-- Login-knappen -->
-      <button class="login" onClick="document.getElementById('id01').style.display='block'" style="width:auto;">Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
-      <h1>Basement</h1><!--Font for denne endres i CSS-->
+      <button class="login" id="login-btn" onClick="document.getElementById('id01').style.display='block'" style="width:auto;">Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
+      <div class="urs-options" id="usr-opt" style="display:none">
+        <button class="usr-link" id="usr-link" onClick="openUsrmenu()" ></button>
+        <div id="usr-dropdown" class="usr-dropdown-menu" >
+                <a href="#">Profil</a>
+                <a href="#" onClick="openEventReg()">Lag kort</a>
+                <a href="#" onClick="logOut()">Logg ut</a>
+        </div>
+      </div>
+     <h1 class="page-title">Basement</h1><!--Font for denne endres i CSS-->
     </nav>
     <!--Dette er innloggingsformen-->
     <div id="id01" class="modal">
@@ -26,9 +50,9 @@
         </div>
         <div class="container"><!--Brukernavn og passord til innlogging:-->
           <label for="uname"><b>Brukernavn</b></label>
-          <input type="text" placeholder="Brukernavn" onfocus="this.value=''" name="uname" required="required" />
+          <input type="text" placeholder="Brukernavn" name="uname" id="uname-login" required="required" />
           <label for="psw"><b>Passord</b></label>
-          <input type="password" placeholder="Passord" name="psw" required="required" />
+          <input type="password" placeholder="Passord" name="psw" id="psw-login" required="required" />
           <button type="submit" onClick="">Logg inn</button>
           <label>
             <input type="checkbox" checked="checked" name="remember" /> Husk meg
@@ -43,13 +67,13 @@
     <!--Formen for å registrere ny bruker:-->
     <!--TODO! Legg inn bedre css-koden for denne!-->
     <div id="id02" class="modal2"> <!--javascript:void(0);-->
-      <form id="form2" class="modal-content animate" action="action_page.php" onsubmit="regNyBruker(this)" method="post">
+      <form id="form2" class="modal-content animate" action="javascript:void(0)" onsubmit="regNyBruker(this)" method="post">
         <div class="imgcontainer"><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
           <span onclick="document.getElementById('id02').style.display='none'; clearFields('form2')" class="close" title="Close Modal">×</span>
         </div>
         <div class="container"><!--Felt for brukernavn:-->
           <label for="reguname"><b>Brukernavn</b></label>
-          <input type="text" placeholder="Skriv Brukernavn" name="uname" required="required" />
+          <input type="text" placeholder="Skriv Brukernavn" name="uname" id="uname1" oninput="checkUsername(this)" required="required" />
           <!--Feltene for passord, med mønster som må følges:-->
           <label for="regpsw1"><b>Passord</b></label>
           <input type="password" placeholder="Skriv Passord" name="psw" id="psw1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Passordet må inneholde stor bokstav, liten bokstav, tall og være 8 karakterer langt" required="required" />
@@ -66,94 +90,327 @@
           <button type="submit">Registrer bruker</button>
         </div>
       </form>
-    </div>
+    </div><!--Denne er for å lage et nytt konsertkort-->
+    div id="id03" class="modal3">
+            <form id="form3" class="modal-content animate" action="javascript:void(0);" onsubmit="lagKort(this)">
+              <div class="imgcontainer"><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
+                <span onclick="document.getElementById('id03').style.display='none'; clearFields('form3')" class="close" title="Close Modal">&times;</span>
+            </div>
+              <div class="container"><!--Felt for brukernavn:-->
+                <label for="bildelink">Lenke til bilde:</label>
+                <input type="text" placeholder="Bildelenke" id="bildelink" />
+                <label for="datokonsert">Konsertdato</label>
+                <input type="date" placeholder="3/3/3" id="konsertdato" required="required" />
+                <label for="spillested">Konsertlokale</label>
+                <input type="text" placeholder="Sted" id="konsertsted" required="required" />
+                <label for="merinfo">Informasjon</label>
+                <input type="text" placeholder="Info..." id="merinfo" /> 
+                <label for="musikktype">Sjanger</label>
+                <select name="sjanger" id="sjanger" required="required">
+                  <option value="Pop">Pop</option>
+                  <option value="Rap">Rap</option>
+                  <option value="Indie">Indie</option>
+                  <option value="Rock">Rock</option>
+                  <option value="Metal">Metal</option>
+                  <option value="Klassisk">Klassisk</option>
+                  <option value="Jazz">Jazz</option>
+                  <option value="Elektro">Elektronisk</option>
+                  <option value="Annet">Annet</option>
+                </select>
+                <button type="submit">Registrer konsert</button>
+                </div>
+            </form>
+          </div>
+          <div id="id04" class="modal4">
+            <form id="form4" class="modal-content animate" action="javascript:void(0);"><!--Denne er for det utvida konsert-kortet -->
+              <div class="imgcontainer-info" ><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
+                <span id="X-knapp" onclick="document.getElementById('id04').style.display='none';" class="close" title="Close Modal">&times;</span>
+                <img src="" id="large-img" />
+              </div>
+              <div class="container-konsert" style="height:60%">
+                 <p id="exp-sjanger" style="position: absolute; float: left; padding-left: 0.5em;"><b></b></p>
+                 <h2 style="text-align:center; display:inline-block; position: absolue; margin-top: 0; margin-bottom: 0;" id="artistname"></h2>
+                 <p id="tidogsted"></p>
+                 <textarea readonly rows="10" style="width:90%; margin-bottom: 1em;" id="infoarea"></textarea>
+            </div>
+            </form>
+          </div>
     <!--Her skal feeden for poster være-->
-    <!--Disse er eksempler på bokser med arrangementer og hvordan det ser ut:-->
     <div class="row">
-      <div class="column">
-        <div class="card">
-          <h3>Card 1</h3>
-          <p>Some text</p>
-          <p>Some text</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="card">
-          <h3>Card 2</h3>
-          <p>Some text</p>
-          <p>Some text</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="card">
-          <h3>Card 3</h3>
-          <p>Some text</p>
-          <p>Some text</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="card">
-          <h3>Card 4</h3>
-          <p>Some text</p>
-          <p>Some text</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="card">
-          <h3>Card 5</h3>
-          <p>Some text</p>
-          <p>Some text</p>
-        </div>
-      </div>
     </div>
   </body>
-  <!--Legg til footer med opphavsrett og shit? Kontakt oss og hjelpeside?-->
-  <!--Skal disse scriptene flyttes til egen fil?-->
+  <footer>
+      <button id="clearButton" style="width: 10vw; width: 10em; bottom:0; position:absolute" onClick="clearSession()">Clear session</button>
+  </footer>
   <script><![CDATA[
     // Hent Modalen
     var modal = document.getElementById('id01');
-    var modal2 = document.getElementById('id02');
+        var modal2 = document.getElementById('id02');
+        var modal3 = document.getElementById('id03');
+        
 
-    // Når noen trykker utenfor vinduet, lukk det
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-        clearFields("form1");
-      }
-    }
+        
 
-    // Tømmer alle feltene når registrerings- eller innloggingsvinduet lukkes
-    function clearFields(myform) {
-      document.getElementById(myform).reset();
-    }
+        window.onload = function(){
+          fillFeed();
+          var kort = document.getElementById('row').getElementsByClassName('column');
+          for(var i=0;i<kort.length; i++){
+            if(sessionStorage.getItem((kort[i].getAttribute(('id')) + '-visible')) == 'none'){
+              kort[i].style.display = 'none';
+            }else{
+              kort[i].style.display = 'block';
+            }
+          }
+        }
 
-    // Åpner registreringsvinduet og lukker innloggingsvinduet
-    function openReg() {
-      document.getElementById('id02').style.display='block'
-      modal.style.display = "none";
-    }
+        function fillFeed(){
+          if(!sessionStorage.getItem('cardCounter')){
+            sessionStorage.setItem('cardCounter', 0);
+          }else{
+            
+            var i = 0;
+            while(true){
+              if(sessionStorage.getItem(('card' + i))){
+                var storedArray = JSON.parse(sessionStorage.getItem(('card' + i)));
+                var column = fillColumn(storedArray);
+                var cards = document.getElementById('row');
+                cards.insertBefore(column, cards.childNodes[0]);
+                i++;
+              }else{
+                return;
+              }
 
-    // Sjekker at passordene matcher
-    function checkPassword(input){
-      if (input.value != document.getElementById('psw1').value) {
-        input.setCustomValidity('Passordet matcher ikke.');
-      } else {
-        input.setCustomValidity('');
-      }
-    }
+            }
+          }
+          return;
+        }
 
-    // Sjekker at e-postene matcher
-    function checkEmail(input){
-      if (input.value != document.getElementById('email1').value) {
-        input.setCustomValidity('E-postadressen matcher ikke.');
-      } else {
-        input.setCustomValidity('');
-      }
-    }
+        //Sjekker om brukeren er innlogget eller ikke
+        if(sessionStorage.getItem('userName') == null){
+          document.getElementById('login-btn').style.display = "block";
+          document.getElementById('usr-opt').style.display = "none";
+        }else{
+          document.getElementById('usr-link').innerHTML = sessionStorage.getItem('userName');
+          document.getElementById('login-btn').style.display = "none";
+          document.getElementById('usr-opt').style.display = "block";
+          
+        }
+        //Funksjon for å logge ut
+        function logOut(){
+          sessionStorage.removeItem('userName');
+          window.location.reload();
+        }
+        function clearSession(){
+          sessionStorage.clear();
+          window.location.reload();
+        }
 
-    // Åpner menyen i hjørnet
-    function openMenu(x) {
-      x.classList.toggle("change");
-    }
+        
+        //Funksjon for å åpne nedtrekksmeny under brukernavn
+        function openUsrmenu(){
+          document.getElementById("usr-dropdown").classList.toggle("show");
+        }
+
+        //Når noen trykker utenfor vinduet, lukk det
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                clearFields("form1");
+            }
+            if (event.target == modal3) {
+                modal3.style.display = "none";
+                clearFields("form3");
+            }
+            if (!event.target.matches('.usr-link')) {
+              var dropdowns = document.getElementsByClassName("usr-dropdown-menu");
+              var i;
+              for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                  openDropdown.classList.remove('show');
+                }
+              }
+            }
+        }
+        //Tømmer alle feltene når registrerings- eller innloggingsvinduet lukkes
+        function clearFields(myform){
+          document.getElementById(myform).reset();
+        }
+        //Åpner registreringsvinduet og lukker innloggingsvinduet
+        function openReg(){
+          document.getElementById('id02').style.display='block';
+          modal.style.display = "none";
+        }
+        //Åpner vinduet for å registrere nytt arrangement
+        function openEventReg(){
+          document.getElementById('id03').style.display='block';
+        }
+
+        function checkUsername(input){
+          var mmm = findUser(input.value);
+          if(mmm != -1){
+            inout.setCustomValidity('Brukernavnet er tatt');
+          }else{
+            input.setCustomValidity('');
+          }
+        }
+        //Sjekker at passordene matcher
+        function checkPassword(input){
+          if(input.value != document.getElementById('psw1').value){
+            input.setCustomValidity('Passordet matcher ikke.');
+          }else{
+            input.setCustomValidity('');
+          }
+        }
+        //Sjekker at e-postene matcher 
+        function checkEmail(input){
+          if(input.value != document.getElementById('email1').value){
+            input.setCustomValidity('E-postadressen matcher ikke.');
+          }else{
+            input.setCustomValidity('');
+          }
+        }
+        //Denne bare sjekker at innloggingen er riktig 
+        function validerLogin(uname, pword){
+          var mnm = findUser(uname.value);
+          if(mnm != -1 && pword.value == sessionStorage.getItem((mnm + '-p'))){
+            sessionStorage.setItem('userName', uname.value);
+            window.location.reload();
+          
+          }else if(uname.value == "Arnold"){
+            sessionStorage.setItem('userName', uname.value);
+            window.location.reload();
+          
+          }else{
+            uname.setCustomValidity('Brukernavn og passord matcher ikke');
+          }
+        }
+        function findUser(uname){
+          var j=0;
+          while(true){
+            if(!sessionStorage.getItem(('usrNm' + j))){
+              //alert('fant ikke bruker');
+              return -1;
+            }
+            if(sessionStorage.getItem(('usrNm' + j)) == uname){
+              return "usrNm" + j;
+            }else{
+              j++;
+            }
+          }
+        }
+        //Dette er funksjonen for å filtrere kortene på forsiden.
+        function filtrerKort(input){ //Denne må endres på!!!
+          document.getElementById('filterMeny').classList.toggle("change");
+          document.getElementById('hamburg-dropdown').style.display = 'none';
+          var kort = document.getElementById('row').getElementsByClassName('column');
+          for(var i=0;i<kort.length; i++){
+            if(kort[i].dataset.genre == input){
+              sessionStorage.setItem((kort[i].getAttribute(('id')) + '-visible'), 'block');
+              kort[i].style.display = 'block';
+            }else{              
+              kort[i].style.display = 'none';
+              sessionStorage.setItem((kort[i].getAttribute(('id')) + '-visible'), 'none');
+            }
+          }
+        }
+        function visAlleKort(){
+          if(document.getElementById('hamburg-dropdown').style.display != 'none'){
+            document.getElementById('filterMeny').classList.toggle("change");
+            document.getElementById('hamburg-dropdown').style.display = 'none';
+          }
+          var kort = document.getElementById('row').getElementsByClassName('column');
+          for(var i=0;i<kort.length; i++){
+              kort[i].style.display = 'block';
+              sessionStorage.setItem((kort[i].getAttribute(('id')) + '-visible'), 'block');
+          }
+        }
+        //Funksjon for å registrere ny bruker
+        function regNyBruker(user){
+          var userNm = document.getElementById('uname1').value;
+          var psWrd = document.getElementById('psw1').value;
+          //alert('userNm: ' + userNm + ' psWrd: ' + psWrd);
+          if(!sessionStorage.getItem('userCounter')){
+            sessionStorage.setItem('userCounter', 0);
+          }
+            var temp = 'usrNm' + sessionStorage.getItem('userCounter');
+            
+            sessionStorage.setItem(('usrNm' + sessionStorage.getItem('userCounter')), userNm);
+            sessionStorage.setItem(('usrNm' + sessionStorage.getItem('userCounter') + '-p'), psWrd);
+          
+          //alert('bruker: ' + sessionStorage.getItem(('usrNm' + sessionStorage.getItem('userCounter')), userNm));
+          //alert('pass: ' + sessionStorage.getItem(('usrNm' + sessionStorage.getItem('userCounter') + '-p'), psWrd));
+          window.location.reload();
+        }
+        //Funksjon for å lage et nytt kort/arrangement
+        function lagKort(myform){
+          var colName = 'card' + sessionStorage.getItem('cardCounter');
+          var cardArray = {img: document.getElementById('bildelink').value, genre: document.getElementById('sjanger').value, artist: sessionStorage.getItem('userName'), dato: document.getElementById('konsertdato').value, sted: document.getElementById('konsertsted').value, info: document.getElementById('merinfo').value, navn: colName};
+          var column = fillColumn(cardArray);          
+          var cards = document.getElementById('row');
+          cards.insertBefore(column, cards.childNodes[0]);
+          
+          window.sessionStorage.setItem(colName, JSON.stringify(cardArray));
+          sessionStorage.setItem("cardCounter", (parseInt(sessionStorage.getItem('cardCounter')) + 1)); //Øker cardCounter
+          modal3.style.display = "none";
+          clearFields("form3");
+        }
+        function fillColumn(myArray){
+          var column = document.createElement('div');
+          column.setAttribute("class", "column");
+          
+          var card = document.createElement('div');
+          card.setAttribute("class", "card");
+          card.setAttribute("data-genre", myArray.genre);
+          card.setAttribute("data-img", myArray.img);
+          card.setAttribute("data-artist", myArray.artist);
+          card.setAttribute("data-dato", myArray.dato);
+          card.setAttribute("data-sted", myArray.sted);
+          card.setAttribute("data-info", myArray.info);
+          card.setAttribute("onClick", "openCard(this)");
+          var cardBody = '"><h3>' + myArray.artist + '</h3><p>' + myArray.dato + ' - ' + myArray.sted + '</p><p>' + myArray.genre + '</p>';
+          if(myArray.img == ''){
+            card.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg' + cardBody;
+          }else{
+            card.innerHTML = '<img src="' + myArray.img + cardBody;
+          }
+          //card.innerHTML = '<img src="' + myArray.img + '"><h3>' + myArray.artist + '</h3><p>' + myArray.dato + ' - ' + myArray.sted + '</p><p>' + myArray.genre + '</p>';
+          column.appendChild(card);
+          card.parentElement.setAttribute("data-genre", myArray.genre);
+          card.parentElement.setAttribute("id", myArray.navn);
+          return column;
+        }
+
+        //Funksjon for å få større utgave av arrangementet
+        function openCard(input){
+          document.getElementById('exp-sjanger').innerHTML = '' + input.dataset.genre;
+          if(input.dataset.img == ''){
+            document.getElementById('large-img').setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg");
+            document.getElementById('X-knapp').style.color = "white";
+          }else{
+            document.getElementById('large-img').setAttribute("src", input.dataset.img);
+            document.getElementById('X-knapp').style.color = "black";
+          }
+          document.getElementById('artistname').innerHTML = input.dataset.artist;
+          document.getElementById('tidogsted').innerHTML = input.dataset.dato + ' - ' + input.dataset.sted;
+          document.getElementById('infoarea').innerHTML = input.dataset.info;
+          document.getElementById('id04').style.display = 'block';
+        }
+        
+        
+        //Åpner menyen i hjørnet
+        function openMenu(x) {
+            x.classList.toggle("change");
+            if(document.getElementById('hamburg-dropdown').style.display == 'none'){
+              document.getElementById('hamburg-dropdown').style.display='block';
+            }else{
+              document.getElementById('hamburg-dropdown').style.display='none';
+            }
+        }
+        //Bare gjør at det å trykke i filter-menyen ikke lukker den
+        var filterMeny = document.getElementById('hamburg-dropdown');
+        filterMeny.addEventListener("click", function (e) {
+          e.stopPropagation()
+        });
 ]]></script>
 </html>

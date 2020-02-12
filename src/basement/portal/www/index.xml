@@ -9,42 +9,42 @@
   <body>
     <!--Navigasjonsbar på toppen-->
     <nav class="nav-bar">
-      <img class="logo-img" src="BasementUB-logo.PNG" alt="Logo" onClick="visAlleKort()" /> <!--Logo skal lenke til forsiden?-->
+      <img class="logo-img" src="BasementUB-logo.PNG" alt="Logo" onclick="visAlleKort()" /> <!--Logo skal lenke til forsiden?-->
       <div class="container2" id="filterMeny" onclick="openMenu(this)"> <!--Denne må kunne forbedres-->
         <div class="bar1"></div>  <!--Disse er de svarte barene i menyen, men dette burde kunne forbedres-->
         <div class="bar2"></div>
         <div class="bar3"></div>
-        <div class="hamburg-dropdown" id="hamburg-dropdown" style="display:none" onClick='javascript:void(0);'>
+        <div class="hamburg-dropdown" id="hamburg-dropdown" style="display:none" onclick='javascript:void(0);'>
                   <h2>Kategorier</h2>
                   <a href="#">Mest populære</a>
-                  <a href="#" onClick="visAlleKort()">Nyeste</a>
-                  <a href="#" onClick="nyesteKort()">Førstkommende</a>
+                  <a href="#" onclick="visAlleKort()">Nyeste</a>
+                  <a href="#" onclick="nyesteKort()">Førstkommende</a>
                   <h2>Sjanger</h2>
-                  <a href="" onClick="filtrerKort('Pop')">Pop</a>
-                  <a href="" onClick="filtrerKort('Rap')">Rap</a>
-                  <a href="" onClick="filtrerKort('Indie')">Indie</a>
-                  <a href="" onClick="filtrerKort('Rock')">Rock</a>
-                  <a href="" onClick="filtrerKort('Metal')">Metal</a>
-                  <a href="" onClick="filtrerKort('Klassisk')">Klassisk</a>
-                  <a href="" onClick="filtrerKort('Jazz')">Jazz</a>
-                  <a href="" onClick="filtrerKort('Elektro')">Elektronisk</a>
-                  <a href="" onClick="filtrerKort('Annet')">Annet</a>
+                  <a href="" onclick="filtrerKort('Pop')">Pop</a>
+                  <a href="" onclick="filtrerKort('Rap')">Rap</a>
+                  <a href="" onclick="filtrerKort('Indie')">Indie</a>
+                  <a href="" onclick="filtrerKort('Rock')">Rock</a>
+                  <a href="" onclick="filtrerKort('Metal')">Metal</a>
+                  <a href="" onclick="filtrerKort('Klassisk')">Klassisk</a>
+                  <a href="" onclick="filtrerKort('Jazz')">Jazz</a>
+                  <a href="" onclick="filtrerKort('Elektro')">Elektronisk</a>
+                  <a href="" onclick="filtrerKort('Annet')">Annet</a>
        </div>
       </div><!-- Login-knappen -->
-      <button class="login" id="login-btn" onClick="document.getElementById('id01').style.display='block'" style="width:auto;">Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
+      <button class="login" id="login-btn" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
       <div class="urs-options" id="usr-opt" style="display:none">
-        <button class="usr-link" id="usr-link" onClick="openUsrmenu()" ></button>
+        <button class="usr-link" id="usr-link" onclick="openUsrmenu()" ></button>
         <div id="usr-dropdown" class="usr-dropdown-menu" >
                 <a href="#">Profil</a>
-                <a href="#" onClick="openEventReg()">Lag kort</a>
-                <a href="#" onClick="logOut()">Logg ut</a>
+                <a href="#" onclick="openEventReg()">Opprett konsert</a>
+                <a href="#" onclick="logOut()">Logg ut</a>
         </div>
       </div>
      <h1 class="page-title">Basement</h1><!--Font for denne endres i CSS-->
     </nav>
     <!--Dette er innloggingsformen-->
     <div id="id01" class="modal">
-      <form id="form1" class="modal-content animate" action="javascript:void(0);" onsubmit="return validateForm()" method="post">
+      <form id="form1" class="modal-content animate" action="javascript:void(0);" onsubmit="validerLogin(document.getElementById('uname-login'), document.getElementById('psw-login'))" method="post">
         <div class="imgcontainer"><!--Dette er X-en oppe i hjørnet-->
           <span onclick="document.getElementById('id01').style.display='none'; clearFields('form1');" class="close" title="Close Modal">×</span>
         </div>
@@ -53,13 +53,13 @@
           <input type="text" placeholder="Brukernavn" name="uname" id="uname-login" required="required" />
           <label for="psw"><b>Passord</b></label>
           <input type="password" placeholder="Passord" name="psw" id="psw-login" required="required" />
-          <button type="submit" onClick="">Logg inn</button>
+          <button type="submit" onclick="">Logg inn</button>
           <label>
             <input type="checkbox" checked="checked" name="remember" /> Husk meg
           </label>
         </div>
         <div class="container" style="background-color:#f1f1f1">
-          <button class="newusr" onClick="openReg()" style="width:auto;">Opprett bruker</button><!--Knapp for å registrere ny bruker-->
+          <button class="newusr" onclick="openReg()" style="width:auto;">Opprett bruker</button><!--Knapp for å registrere ny bruker-->
           <span class="psw">Glemt <a href="#">passord?</a></span>
         </div>
       </form>
@@ -91,10 +91,10 @@
         </div>
       </form>
     </div><!--Denne er for å lage et nytt konsertkort-->
-    div id="id03" class="modal3">
-            <form id="form3" class="modal-content animate" action="javascript:void(0);" onsubmit="lagKort(this)">
+    <div id="id03" class="modal3">
+            <form id="form3" class="modal-content animate" onsubmit="alert(document.getElementById('sjanger').value)">
               <div class="imgcontainer"><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
-                <span onclick="document.getElementById('id03').style.display='none'; clearFields('form3')" class="close" title="Close Modal">&times;</span>
+                <span onclick="document.getElementById('id03').style.display='none'; clearFields('form3')" class="close" title="Close Modal">x</span>
             </div>
               <div class="container"><!--Felt for brukernavn:-->
                 <label for="bildelink">Lenke til bilde:</label>
@@ -124,14 +124,14 @@
           <div id="id04" class="modal4">
             <form id="form4" class="modal-content animate" action="javascript:void(0);"><!--Denne er for det utvida konsert-kortet -->
               <div class="imgcontainer-info" ><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
-                <span id="X-knapp" onclick="document.getElementById('id04').style.display='none';" class="close" title="Close Modal">&times;</span>
+                <span id="X-knapp" onclick="document.getElementById('id04').style.display='none';" class="close" title="Close Modal">x</span>
                 <img src="" id="large-img" />
               </div>
               <div class="container-konsert" style="height:60%">
                  <p id="exp-sjanger" style="position: absolute; float: left; padding-left: 0.5em;"><b></b></p>
                  <h2 style="text-align:center; display:inline-block; position: absolue; margin-top: 0; margin-bottom: 0;" id="artistname"></h2>
                  <p id="tidogsted"></p>
-                 <textarea readonly rows="10" style="width:90%; margin-bottom: 1em;" id="infoarea"></textarea>
+                 <textarea readonly="readonly" rows="10" style="width:90%; margin-bottom: 1em;" id="infoarea"></textarea>
             </div>
             </form>
           </div>
@@ -140,18 +140,16 @@
     </div>
   </body>
   <footer>
-      <button id="clearButton" style="width: 10vw; width: 10em; bottom:0; position:absolute" onClick="clearSession()">Clear session</button>
+      <button id="clearButton" style="width: 10vw; width: 10em; bottom:0; position:absolute" onclick="clearSession()">Clear session</button>
   </footer>
   <script><![CDATA[
     // Hent Modalen
     var modal = document.getElementById('id01');
-        var modal2 = document.getElementById('id02');
-        var modal3 = document.getElementById('id03');
+    var modal2 = document.getElementById('id02');
+    var modal3 = document.getElementById('id03');
         
 
-        
-
-        window.onload = function(){
+    window.onload = function(){
           fillFeed();
           var kort = document.getElementById('row').getElementsByClassName('column');
           for(var i=0;i<kort.length; i++){
@@ -367,7 +365,7 @@
           card.setAttribute("data-dato", myArray.dato);
           card.setAttribute("data-sted", myArray.sted);
           card.setAttribute("data-info", myArray.info);
-          card.setAttribute("onClick", "openCard(this)");
+          card.setAttribute("onclick", "openCard(this)");
           var cardBody = '"><h3>' + myArray.artist + '</h3><p>' + myArray.dato + ' - ' + myArray.sted + '</p><p>' + myArray.genre + '</p>';
           if(myArray.img == ''){
             card.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg' + cardBody;

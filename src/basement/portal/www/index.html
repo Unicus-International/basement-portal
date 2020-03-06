@@ -16,9 +16,9 @@
                 <div class="bar3"></div>
                 <div class="hamburg-dropdown" id="hamburg-dropdown" style="display:none" onClick='javascript:void(0);'>
                   <h2>Kategorier</h2>
-                  <a href="#">Mest populære</a>
+                  <a href="#" onClick="visAlleKort()">Mest populære</a>
                   <a href="#" onClick="visAlleKort()">Nyeste</a>
-                  <a href="#" onClick="nyesteKort()">Førstkommende</a>
+                  <a href="#" onClick="visAlleKort()">Førstkommende</a>
                   <h2>Sjanger</h2>
                   <a href="" onClick="filtrerKort('Pop')">Pop</a>
                   <a href="" onClick="filtrerKort('Rap')">Rap</a>
@@ -32,7 +32,7 @@
                 </div>
             </div><!-- Login-knappen -->
             <button class="login" id="login-btn" onClick="document.getElementById('id01').style.display='block'" style="width:auto;" >Log in/Sign up</button> <!--Knappen skal åpne et innloggingsvindu, ikke sende til ny side-->
-            
+
             <div class="urs-options" id="usr-opt" style="display:none">
               <button class="usr-link" id="usr-link" onClick="openUsrmenu()" ></button>
               <div id="usr-dropdown" class="usr-dropdown-menu" >
@@ -45,20 +45,20 @@
           </nav>
           <!--Dette er innloggingsformen-->
           <div id="id01" class="modal">
-            <form id="form1" class="modal-content animate" action="javascript:void(0);" onsubmit="validerLogin(document.getElementById('uname-login'), document.getElementById('psw-login'))" method="post">
+            <form id="form1" class="modal-content animate" action="javascript:void(0);" onsubmit="validerLogin(document.getElementById('uname-login'), document.getElementById('psw-login'), document.getElementById('remember').checked)" method="post">
                 <div class="imgcontainer"><!--Dette er X-en oppe i hjørnet-->
                     <span onclick="document.getElementById('id01').style.display='none'; clearFields('form1');" class="close" title="Close Modal">&times;</span>
                 </div>
                 <div class="container"><!--Brukernavn og passord til innlogging:-->
                     <label for="uname"><b>Brukernavn</b></label>
-                    <input type="text" placeholder="Skriv Brukernavn" name="uname" id="uname-login" required />
+                    <input type="text" placeholder="Skriv Brukernavn" name="uname" id="uname-login" onchange="this.setCustomValidity('')" required />
               
                     <label for="psw"><b>Passord</b></label>
-                    <input type="password" placeholder="Skriv Passord" name="psw" id="psw-login" required />
+                    <input type="password" placeholder="Skriv Passord" name="psw" id="psw-login" onchange="document.getElementById('uname-login').setCustomValidity('')" required />
                       
                     <button type="submit" onClick="">Logg inn</button>
                     <label>
-                      <input type="checkbox" checked="checked" name="remember" /> Husk meg
+                      <input type="checkbox" checked="checked" id="remember" /> Husk meg
                     </label>
                   </div>
                   <div class="container" style="background-color:#f1f1f1">
@@ -69,19 +69,19 @@
           </div>
           <!--Formen for å registrere ny bruker:-->
           <!--TODO! Legg inn bedre css-koden for denne!-->
-          <div id="id02" class="modal2"> <!--javascript:void(0);-->
+          <div id="id02" class="modal2">
             <form id="form2" class="modal-content animate" action="javascript:void(0)" onsubmit="regNyBruker(this)" method="post">
                 <div class="imgcontainer"><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
                     <span onclick="document.getElementById('id02').style.display='none'; clearFields('form2')" class="close" title="Close Modal">&times;</span>
                 </div>
                 <div class="container"><!--Felt for brukernavn:-->
                     <label for="reguname"><b>Brukernavn</b></label>
-                    <input type="text" placeholder="Skriv Brukernavn" name="uname" id="uname1" oninput="checkUsername(this)" required />
+                    <input type="text" placeholder="Skriv Brukernavn" name="uname" id="uname1" oninput="checkUsername(this)"  required />
                     <!--Feltene for passord, med mønster som må følges:-->
                     <label for="regpsw1"><b>Passord</b></label>
-                    <input type="password" placeholder="Skriv Passord" name="psw" id="psw1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Passordet må inneholde stor bokstav, liten bokstav, tall og være 8 karakterer langt" required />
+                    <input type="password" placeholder="Minst 8 karakterer: stor bokstav, liten bokstav, og tegn" name="psw" id="psw1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Passordet må inneholde stor bokstav, liten bokstav, tall og være 8 karakterer langt" required />
                     <label for="regpsw2"><b>Bekreft passord</b></label>
-                    <input type="password" placeholder="Skriv Passord" name="psw" id="psw2" oninput="checkPassword(this)" required />
+                    <input type="password" placeholder="Bekreft Passord" name="psw" id="psw2" oninput="checkPassword(this)" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Passordet må inneholde stor bokstav, liten bokstav, tall og være 8 karakterer langt" required />
                     <!--Feltene for e-postadresse:-->
                     <label for="mail1"><b>E-post</b></label>
                     <input type="email" placeholder="Angi E-postadresse" name="email" id="email1" required />
@@ -126,9 +126,9 @@
                 <button type="submit">Registrer konsert</button>
                 </div>
             </form>
-          </div>
+          </div><!--Denne er for det utvida konsert-kortet -->
           <div id="id04" class="modal4">
-            <form id="form4" class="modal-content animate" action="javascript:void(0);"><!--Denne er for det utvida konsert-kortet -->
+            <form id="form4" class="modal-content animate" action="javascript:void(0);">
               <div class="imgcontainer-info" ><!--Dette er x-en oppe i hjørnet for å lukke vinduet-->
                 <span id="X-knapp" onclick="document.getElementById('id04').style.display='none';" class="close" title="Close Modal">&times;</span>
                 <img src="" id="large-img" />
@@ -139,7 +139,7 @@
               <h2 style="text-align:center; display:inline-block; position: absolue; margin-top: 0; margin-bottom: 0;" id="artistname"></h2>
               <p id="tidogsted"></p>
               <textarea readonly rows="10" style="width:90%; margin-bottom: 1em;" id="infoarea"></textarea>
-
+              <button name="sletteKnapp" id="sletteKnapp" data-id="" onclick="slettKort()" style="display:none">Slett konsert</button>
             </div>
             </form>
           </div>
@@ -147,11 +147,6 @@
           <div class="row" id="row">
 
           </div>
-
-
-
-        
-        
     </body>
     <footer>
     </footer>
@@ -162,11 +157,10 @@
         var modal3 = document.getElementById('id03');
         const baseURL = "https://api.basement.yoga.unicus.com/v0/";
         var xhr;
-
         
-
+        //TODO: Denne må endres på!
         window.onload = function(){
-          fillFeed();
+          hentKort();
           var kort = document.getElementById('row').getElementsByClassName('column');
           for(var i=0;i<kort.length; i++){
             if(sessionStorage.getItem((kort[i].getAttribute(('id')) + '-visible')) == 'none'){
@@ -175,44 +169,112 @@
               kort[i].style.display = 'block';
             }
           }
+          sjekkLogin();
         }
-
-        function fillFeed(){
-          if(!sessionStorage.getItem('cardCounter')){
-            sessionStorage.setItem('cardCounter', 0);
-          }else{
-            
-            var i = 0;
-            while(true){
-              if(sessionStorage.getItem(('card' + i))){
-                var storedArray = JSON.parse(sessionStorage.getItem(('card' + i)));
-                var column = fillColumn(storedArray);
-                var cards = document.getElementById('row');
-                cards.insertBefore(column, cards.childNodes[0]);
-                i++;
-              }else{
-                return;
+        //TODO: Denne må endres på!
+        function hentKort(){
+          xhr = new XMLHttpRequest();
+          var url = baseURL + "card/list?page=0&limit=12";
+          xhr.open("GET", url, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.withCredentials = true;
+          var sjanger = sessionStorage.getItem('filter');
+          xhr.onload = function() {
+            if(xhr.status == 200){
+              console.log(JSON.parse(xhr.responseText));
+              var arrayOfThings = JSON.parse(xhr.responseText);
+              for(var i=0;i<arrayOfThings.length;i++){
+                var ooobject = arrayOfThings[i];
+                //alert("sjanger:" + sjanger);
+                if(!sjanger || ooobject.genre == sjanger){
+                  var column = fillColumn(ooobject);
+                  var row = document.getElementById('row');
+                  row.appendChild(column);
+                }
+                
               }
-
+            }else{
+              alert(xhr.responseText);
+            }
+          };
+          xhr.onerror = function() {
+            alert('There was an error!');
+          }
+          xhr.send();
+        }
+        //Setter cookie for innlogging
+        function setCookie(brukernavn, dato){
+          let name = "basement";
+          let uname = encodeURIComponent(brukernavn);
+          let utgaar = "";
+          if(dato){
+            var date = new Date();
+            date.setDate(date.getDate() + 365);
+            utgaar = "; expires=" + date.toUTCString();
+          }
+          document.cookie = name + "=" + uname + utgaar;
+        }
+        //Henter cookie for innlogging
+        function getCookie(){
+          var cooookies = document.cookie.split(';');
+          for (var i = 0; i < cooookies.length; i++) {
+            var name = cooookies[i].split('=')[0];
+            var value = cooookies[i].split('=')[1];
+            if(name == ' basement'){
+              return decodeURIComponent(value);
             }
           }
-          return;
+          return "";
+        }
+        //Fjerner cookie for utlogging
+        function deleteCookie(){
+          document.cookie = "basement=; expires=Fri, 2 Jan 1970 12:00:00 UTC;";
         }
 
+        
+
         //Sjekker om brukeren er innlogget eller ikke
-        if(sessionStorage.getItem('userName') == null){
-          document.getElementById('login-btn').style.display = "block";
-          document.getElementById('usr-opt').style.display = "none";
-        }else{
-          document.getElementById('usr-link').innerHTML = sessionStorage.getItem('userName');
-          document.getElementById('login-btn').style.display = "none";
-          document.getElementById('usr-opt').style.display = "block";
-          
+        function sjekkLogin(){
+          var inne = getCookie();
+          if(!inne){
+            document.getElementById('login-btn').style.display = "block";
+            document.getElementById('usr-opt').style.display = "none";
+          }else{
+            sessionStorage.setItem('userName', inne)
+            document.getElementById('usr-link').innerHTML = inne;
+            document.getElementById('login-btn').style.display = "none";
+            document.getElementById('usr-opt').style.display = "block";
+          }
         }
         //Funksjon for å logge ut
         function logOut(){
           sessionStorage.removeItem('userName');
+          sessionStorage.removeItem('filter');
+          deleteCookie();
           window.location.reload();
+        }
+        function clearSession(){
+          hentKort();
+          /*
+          var coname = "Test";
+          alert(coname);
+          setCookie(coname, false);
+          alert(document.cookie);
+          deleteCookie();
+          /*document.cookie = 'cookie1=' + coname +'; expires=Fri, 6 Mar 2020 12:00:00 UTC';
+          document.cookie = 'cookie2=Test2; expires=Fri, 6 Mar 2020 12:00:00 UTC';
+          alert(document.cookie);
+          var cooookies = document.cookie.split(';');
+          for (var i = 0; i < cooookies.length; i++) {
+            var name = cooookies[i].split('=')[0];
+            var value = cooookies[i].split('=')[1];
+            if(name == ' cookie1'){
+              alert(name + "::" + decodeURIComponent(value));
+            }
+          }
+          document.cookie = 'cookie1=;expires=Sun, 1 Mar 2020 12:00:00 UTC;';
+          document.cookie = 'cookie2=;expires=Sun, 1 Mar 2020 12:00:00 UTC;';
+          alert(document.cookie);*/
         }
         
         //Funksjon for å åpne nedtrekksmeny under brukernavn
@@ -280,25 +342,36 @@
           }
         }
         //Denne bare sjekker at innloggingen er riktig 
-        function validerLogin(uname, pword){
-          var mnm = findUser(uname.value);
-          if(mnm != -1 && pword.value == sessionStorage.getItem((mnm + '-p'))){
-            sessionStorage.setItem('userName', uname.value);
-            window.location.reload();
-          
-          }else if(uname.value == "Arnold"){
-            sessionStorage.setItem('userName', uname.value);
-            window.location.reload();
-          
-          }else{
-            uname.setCustomValidity('Brukernavn og passord matcher ikke');
-          }
+        function validerLogin(user_name, pass_word, bli_inne){
+          xhr = new XMLHttpRequest();
+          var url = baseURL + "user/login";
+          xhr.open("POST", url, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.withCredentials = true;
+          var data = "username=" + user_name.value + "&password=" + pass_word.value;
+          xhr.onload = function() {
+            var responseText = xhr.responseText;
+            if(xhr.status == 204){
+              setCookie(user_name.value, bli_inne);
+              window.location.reload();
+            }else if(xhr.status == 403){
+              user_name.setCustomValidity('Brukernavn og passord matcher ikke');
+            }else{
+              console.log(responseText);
+            }
+          };
+          xhr.onerror = function() {
+            alert('There was an error!');
+          };
+          xhr.send(data);
         }
+
+
+        //TODO: Denne kan bare fjernes
         function findUser(uname){
           var j=0;
           while(true){
             if(!sessionStorage.getItem(('usrNm' + j))){
-              //alert('fant ikke bruker');
               return -1;
             }
             if(sessionStorage.getItem(('usrNm' + j)) == uname){
@@ -309,84 +382,99 @@
           }
         }
         //Dette er funksjonen for å filtrere kortene på forsiden.
-        function filtrerKort(input){ //Denne må endres på!!!
-          document.getElementById('filterMeny').classList.toggle("change");
-          document.getElementById('hamburg-dropdown').style.display = 'none';
-          var kort = document.getElementById('row').getElementsByClassName('column');
-          for(var i=0;i<kort.length; i++){
-            if(kort[i].dataset.genre == input){
-              sessionStorage.setItem((kort[i].getAttribute(('id')) + '-visible'), 'block');
-              kort[i].style.display = 'block';
-            }else{              
-              kort[i].style.display = 'none';
-              sessionStorage.setItem((kort[i].getAttribute(('id')) + '-visible'), 'none');
-            }
-          }
+        //TODO: Gjør om på så sessionStorage ikke blir brukt?
+        //Bruk /card/list og gå gjennom JSON-lista hvor kun kort med riktig sjanger legges inn
+        function filtrerKort(input){ 
+          sessionStorage.setItem('filter', input);
+          hentKort();
         }
+        //TODO: Gjør om på
+        //Bruk /card/list, bruk løkke(?) og gå gjennom JSON-lista og append hver etter den forrige
         function visAlleKort(){
-          if(document.getElementById('hamburg-dropdown').style.display != 'none'){
-            document.getElementById('filterMeny').classList.toggle("change");
-            document.getElementById('hamburg-dropdown').style.display = 'none';
-          }
-          var kort = document.getElementById('row').getElementsByClassName('column');
-          for(var i=0;i<kort.length; i++){
-              kort[i].style.display = 'block';
-              sessionStorage.setItem((kort[i].getAttribute(('id')) + '-visible'), 'block');
-          }
+          sessionStorage.setItem('filter', '');
+          window.location.reload();
         }
         //Funksjon for å registrere ny bruker
         function regNyBruker(user){
           var userNm = document.getElementById('uname1').value;
-          var psWrd = document.getElementById('psw1').value;
-          //alert('userNm: ' + userNm + ' psWrd: ' + psWrd);
-          if(!sessionStorage.getItem('userCounter')){
-            sessionStorage.setItem('userCounter', 0);
-          }
-            var temp = 'usrNm' + sessionStorage.getItem('userCounter');
-            
-            sessionStorage.setItem(('usrNm' + sessionStorage.getItem('userCounter')), userNm);
-            sessionStorage.setItem(('usrNm' + sessionStorage.getItem('userCounter') + '-p'), psWrd);
+          userNm.setCustomValidity('');
+          var psWrd1 = document.getElementById('psw1').value;
+          var psWrd2 = document.getElementById('psw2').value;
+          var eMail = document.getElementById('email1').value;
+          xhr = new XMLHttpRequest();
+          var url = baseURL + "user/register";
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.withCredentials = true;
+          var data = "username=" + userNm + "&password_one=" + psWrd1 + "&password_two=" + psWrd2 + "&email_address=" + eMail;
+          xhr.onload = function() {
+            var responseText = xhr.responseText;
+            if(xhr.status == 201){
+              //Registrering suksessfull
+            }else if(xhr.status == 403){
+              userNm.setCustomValidity('Brukernavnet er allerede tatt');
+            }else{
+              console.log(responseText);
+            }
+          };
+          xhr.onerror = function() {
+            console.log("There was an error");
+          };
+          xhr.send(data);        
           
-          //alert('bruker: ' + sessionStorage.getItem(('usrNm' + sessionStorage.getItem('userCounter')), userNm));
-          //alert('pass: ' + sessionStorage.getItem(('usrNm' + sessionStorage.getItem('userCounter') + '-p'), psWrd));
           window.location.reload();
         }
         //Funksjon for å lage et nytt kort/arrangement
         function lagKort(myform){
-          var colName = 'card' + sessionStorage.getItem('cardCounter');
-          var cardArray = {img: document.getElementById('bildelink').value, genre: document.getElementById('sjanger').value, artist: sessionStorage.getItem('userName'), dato: document.getElementById('konsertdato').value, sted: document.getElementById('konsertsted').value, info: document.getElementById('merinfo').value, navn: colName};
-          var column = fillColumn(cardArray);          
-          var cards = document.getElementById('row');
-          cards.insertBefore(column, cards.childNodes[0]);
-          
-          window.sessionStorage.setItem(colName, JSON.stringify(cardArray));
-          sessionStorage.setItem("cardCounter", (parseInt(sessionStorage.getItem('cardCounter')) + 1)); //Øker cardCounter
+          xhr = new XMLHttpRequest();
+          var url = baseURL + "/card/create";
+          var dateNew = document.getElementById('konsertdato').value + "T16:00:00Z";
+          xhr.open("POST", url, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.withCredentials = true;
+          xhr.onload = function() {
+            if(xhr.status == 201){
+              sessionStorage.setItem('filter', '');
+              hentKort();
+            }else{
+              console.log(xhr.responseText);
+            }
+          };
+          xhr.onerror = function() {
+            console.log("There was an error");
+          };
+          var data = JSON.stringify({"title":sessionStorage.getItem('userName'), "genre":document.getElementById('sjanger').value, "description":document.getElementById('merinfo').value, "date":dateNew, "location":document.getElementById('konsertsted').value, "image_url":document.getElementById('bildelink').value});
+          xhr.send(data);
           modal3.style.display = "none";
           clearFields("form3");
-        }
-        function fillColumn(myArray){
-          var column = document.createElement('div');
-          column.setAttribute("class", "column");
           
+        }
+        //Denne trenger ikke forandring
+        function fillColumn(responsJson){
+          var column = document.createElement('div');
           var card = document.createElement('div');
+          var dato = responsJson.date.split('T');
+
+          column.setAttribute("class", "column");
+          column.setAttribute("data-genre", responsJson.genre);
+          column.setAttribute("id", responsJson.id);
+          
           card.setAttribute("class", "card");
-          card.setAttribute("data-genre", myArray.genre);
-          card.setAttribute("data-img", myArray.img);
-          card.setAttribute("data-artist", myArray.artist);
-          card.setAttribute("data-dato", myArray.dato);
-          card.setAttribute("data-sted", myArray.sted);
-          card.setAttribute("data-info", myArray.info);
+          card.setAttribute("data-genre", responsJson.genre);
+          card.setAttribute("data-img", responsJson.image_url);
+          card.setAttribute("data-artist", responsJson.title);
+          card.setAttribute("data-dato", dato[0]);
+          card.setAttribute("data-sted", responsJson.location);
+          card.setAttribute("data-info", responsJson.description);
           card.setAttribute("onClick", "openCard(this)");
-          var cardBody = '"><h3>' + myArray.artist + '</h3><p>' + myArray.dato + ' - ' + myArray.sted + '</p><p>' + myArray.genre + '</p>';
-          if(myArray.img == ''){
+          var cardBody = '"><h3>' + responsJson.title + '</h3><p>' + dato[0] + ' - ' + responsJson.location + '</p><p>' + responsJson.genre + '</p>';
+          if(responsJson.img == ''){
             card.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg' + cardBody;
           }else{
-            card.innerHTML = '<img src="' + myArray.img + cardBody;
+            card.innerHTML = '<img src="' + responsJson.image_url + cardBody;
           }
-          //card.innerHTML = '<img src="' + myArray.img + '"><h3>' + myArray.artist + '</h3><p>' + myArray.dato + ' - ' + myArray.sted + '</p><p>' + myArray.genre + '</p>';
           column.appendChild(card);
-          card.parentElement.setAttribute("data-genre", myArray.genre);
-          card.parentElement.setAttribute("id", myArray.navn);
+          //card.parentElement.setAttribute("data-genre", responsJson.genre);
+          //card.parentElement.setAttribute("id", responsJson.id);
           return column;
         }
 
@@ -403,7 +491,34 @@
           document.getElementById('artistname').innerHTML = input.dataset.artist;
           document.getElementById('tidogsted').innerHTML = input.dataset.dato + ' - ' + input.dataset.sted;
           document.getElementById('infoarea').innerHTML = input.dataset.info;
+          document.getElementById('sletteKnapp').setAttribute('data-id', input.parentElement.id);
+          let kortEier = getCookie();
+          if(kortEier && input.dataset.artist == kortEier){
+            document.getElementById('sletteKnapp').style.display = 'block';
+          }else{
+            document.getElementById('sletteKnapp').style.display = 'none';
+          }
           document.getElementById('id04').style.display = 'block';
+        }
+        //Funksjon som sletter kort/konsert
+        function slettKort(){
+          var kort_id = document.getElementById('sletteKnapp').dataset.id;
+          alert(kort_id);
+          var url = baseURL + "card/" + kort_id + "/delete"
+          xhr.open("GET", url, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.withCredentials = true;
+          xhr.onload = function() {
+            if(xhr.status == 204){
+              window.location.reload();
+            }else{
+              console.log(xhr.responseText);
+            }
+          };
+          xhr.onerror = function() {
+            console.log("Error");
+          };
+          xhr.send(null);
         }
         
         

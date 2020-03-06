@@ -185,7 +185,7 @@
               var arrayOfThings = JSON.parse(xhr.responseText);
               for(var i=0;i<arrayOfThings.length;i++){
                 var ooobject = arrayOfThings[i];
-                //alert("sjanger:" + sjanger);
+                
                 if(!sjanger || ooobject.genre == sjanger){
                   var column = fillColumn(ooobject);
                   var row = document.getElementById('row');
@@ -194,11 +194,11 @@
                 
               }
             }else{
-              alert(xhr.responseText);
+              console.log(xhr.responseText);
             }
           };
           xhr.onerror = function() {
-            alert('There was an error!');
+            console.log('There was an error!');
           }
           xhr.send();
         }
@@ -361,7 +361,7 @@
             }
           };
           xhr.onerror = function() {
-            alert('There was an error!');
+            console.log('There was an error!');
           };
           xhr.send(data);
         }
@@ -503,7 +503,6 @@
         //Funksjon som sletter kort/konsert
         function slettKort(){
           var kort_id = document.getElementById('sletteKnapp').dataset.id;
-          alert(kort_id);
           var url = baseURL + "card/" + kort_id + "/delete"
           xhr.open("GET", url, true);
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

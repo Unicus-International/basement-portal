@@ -37,7 +37,7 @@
               <button class="usr-link" id="usr-link" onClick="openUsrmenu()" ></button>
               <div id="usr-dropdown" class="usr-dropdown-menu" >
                 <a href="#">Profil</a>
-                <a href="#" onClick="openEventReg()">Lag kort</a>
+                <a href="#" onClick="openEventReg()">Lag konsert</a>
                 <a href="#" onClick="logOut()">Logg ut</a>
               </div>
             </div>
@@ -153,15 +153,15 @@
         
         
     </body>
-    <footer><!--Denne knappen er for å fjerne all midlertidig-lagret data-->
-      <button id="clearButton" style="width: 10vw; width: 10em; bottom:0; position:absolute" onClick="clearSession()">Clear session</button>
+    <footer>
     </footer>
     <script>
         //Hent Modalen
         var modal = document.getElementById('id01');
         var modal2 = document.getElementById('id02');
         var modal3 = document.getElementById('id03');
-        
+        const baseURL = "https://api.basement.yoga.unicus.com/v0/";
+        var xhr;
 
         
 
@@ -214,11 +214,6 @@
           sessionStorage.removeItem('userName');
           window.location.reload();
         }
-        function clearSession(){
-          sessionStorage.clear();
-          window.location.reload();
-        }
-
         
         //Funksjon for å åpne nedtrekksmeny under brukernavn
         function openUsrmenu(){

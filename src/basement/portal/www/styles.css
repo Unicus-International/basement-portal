@@ -7,7 +7,9 @@ body {
     overflow: visible;
 }
 
-
+textarea{
+  resize: none;
+}
 
 
 /*Boksene som holder kortene på forsiden med konserter*/

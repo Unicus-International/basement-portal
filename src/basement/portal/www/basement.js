@@ -19,7 +19,7 @@ window.onload = function(){
 
 function hentKort(){
     xhr = new XMLHttpRequest();
-    var url = baseURL + "card/list?page=0&limit=12";
+    var url = baseURL + "card/list?page=0&limit=80";
     xhr.open("GET", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.withCredentials = true;

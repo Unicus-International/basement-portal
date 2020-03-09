@@ -340,7 +340,7 @@
           hentKort();
         }
 
-        //Bruk /card/list, bruk løkke(?) og gå gjennom JSON-lista og append hver etter den forrige
+        //Denne funksjonen setter saa alle kort hentes
         function visAlleKort(){
           sessionStorage.setItem('filter', '');
           window.location.reload();
@@ -397,7 +397,6 @@
           xhr.send(data);
           modal3.style.display = "none";
           clearFields("form3");
-          
         }
         //Denne trenger ikke forandring
         function fillColumn(responsJson){

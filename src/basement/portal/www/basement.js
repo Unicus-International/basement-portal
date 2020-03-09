@@ -31,7 +31,7 @@ function hentKort(){
             for(var i=0;i<arrayOfThings.length;i++){
                 var ooobject = arrayOfThings[i];
                 if(!sjanger || ooobject.genre == sjanger){
-                    var column = fillColumn(ooobject);
+                    var column = fillColumn_v2(ooobject);
                     var row = document.getElementById('row');
                     row.appendChild(column);
                 }
@@ -79,9 +79,11 @@ function deleteCookie(){
 function sjekkLogin(){
     var inne = getCookie();
     if(!inne){
+        document.getElementById('login-btn').innerText = "Log in/Sign up";
         document.getElementById('login-btn').style.display = "block";
         document.getElementById('usr-opt').style.display = "none";
     }else{
+        document.getElementById('login-btn').innerText = "";
         sessionStorage.setItem('userName', inne)
         document.getElementById('usr-link').innerHTML = inne;
         document.getElementById('login-btn').style.display = "none";
@@ -176,6 +178,7 @@ function validerLogin(user_name, pass_word, bli_inne){
         var responseText = xhr.responseText;
         if(xhr.status == 204){
             setCookie(user_name.value, bli_inne);
+            document.getElementById('login-btn').innerText = "";
             window.location.reload();
         }else if(xhr.status == 403){
             user_name.setCustomValidity('Brukernavn og passord matcher ikke');
@@ -233,8 +236,11 @@ function regNyBruker(user){
 
 //Funksjon for å lage et nytt kort/arrangement
 function lagKort(myform){
+    if(document.getElementById('bildelink').value == ''){
+        document.getElementById('bildelink').value = "https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg";
+    }
     xhr = new XMLHttpRequest();
-    var url = baseURL + "/card/create";
+    var url = baseURL + "card/create";
     var dateNew = document.getElementById('konsertdato').value + "T16:00:00Z";
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -252,8 +258,9 @@ function lagKort(myform){
     };
     var data = JSON.stringify({"title":sessionStorage.getItem('userName'), "genre":document.getElementById('sjanger').value, "description":document.getElementById('merinfo').value, "date":dateNew, "location":document.getElementById('konsertsted').value, "image_url":document.getElementById('bildelink').value});
     xhr.send(data);
-    modal3.style.display = "none";
+    myform.style.display = "none";
     clearFields("form3");
+    window.location.reload();
 }
 
 //Denne trenger ikke forandring
@@ -291,23 +298,34 @@ function fillColumn(responsJson){
 
 function fillColumn_v2(responseJSON) {
     var column = document.getElementById('column_template').cloneNode(true);
+    var dato = responseJSON.date.split('T');
+    var card = column.querySelector('div');
 
-    column.setAttribute("data-genre", responsJSON.genre);
-    column.setAttribute("id", reponseJSON.id);
+    column.setAttribute("data-genre", responseJSON.genre);
+    column.setAttribute("id", responseJSON.id);
+    
+    card.setAttribute("class", "card");
+    card.setAttribute("data-genre", responseJSON.genre);
+    card.setAttribute("data-img", responseJSON.image_url);
+    card.setAttribute("data-artist", responseJSON.title);
+    card.setAttribute("data-dato", dato[0]);
+    card.setAttribute("data-sted", responseJSON.location);
+    card.setAttribute("data-info", responseJSON.description);
+    card.setAttribute("onclick", "openCard(this)");
 
-    column.getElementBySelector('img').setAttribute("src") = responseJSON.image_url;
-    column.getElementBySelector('h3').textContent = responseJSON.title;
-    column.getElementBySelector('p.date').textContent = responseJSON.date + ' - ' responseJSON.location;
-    column.getElementBySelector('p.genre').textContent = responseJSON.genre;
-
+    column.querySelector('img').setAttribute("src", responseJSON.image_url);
+    column.querySelector('h3').textContent = responseJSON.title;
+    column.querySelector('p.date').textContent = dato[0] + ' - ' + responseJSON.location;
+    column.querySelector('p.genre').textContent = responseJSON.genre;
+    
     return column;
 }
 
 //Funksjon for å få større utgave av arrangementet
 function openCard(input){
     document.getElementById('exp-sjanger').innerHTML = '' + input.dataset.genre;
-    if(input.dataset.img == ''){
-        document.getElementById('large-img').setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg");
+    if(input.dataset.img == "https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg"){
+        document.getElementById('large-img').setAttribute("src", input.dataset.img);
         document.getElementById('X-knapp').style.color = "white";
     }else{
         document.getElementById('large-img').setAttribute("src", input.dataset.img);
@@ -344,6 +362,7 @@ function slettKort(){
         console.log("Error");
     };
     xhr.send(null);
+    window.location.reload();
 }
 
 

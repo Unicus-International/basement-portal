@@ -1,7 +1,7 @@
 var modal = document.getElementById('id01');
 var modal2 = document.getElementById('id02');
 var modal3 = document.getElementById('id03');
-const baseURL = "https://api.basement.yoga.unicus.com/v0/";
+const baseURL = "https://basement.yoga.unicus.com/v0/";
 var xhr;
 
 window.onload = function(){
